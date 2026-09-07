@@ -1,6 +1,6 @@
 {
   "name": "tabella",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "type": "module",
   "description": "Open-source, AI-native mini-CRM: flexible data model, a 100k-row table that feels instant, live multi-client sync, and an MCP server for agents.",
