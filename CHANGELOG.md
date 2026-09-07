@@ -7,6 +7,34 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [0.2.0] — 2026-09-08
+
+### Added
+
+- **Seed data** (#4): deterministic 100k-record dataset (companies 40k / people 40k / deals
+  20k) with correlated distributions — weighted stages, log-normal values scaled by stage
+  and industry, people weighted toward bigger companies, deals linked to a real company
+  contact. `POST /api/demo/reseed` resets full or custom counts; 100k rows land in ~1s
+  locally (8s deployed).
+- **Expression indexes** (#5, ADR-0002): `(object_id, <expr>, id)` on the six hot JSONB
+  keys + GIN fallback; EXPLAIN-verified index scans over 100k rows.
+- **Records REST API** (#6): `GET/POST /api/objects/:slug/records`,
+  `GET/PATCH/DELETE /api/records/:id` — server-side filter (eq/neq/contains/gt/gte/lt/lte/
+  in/is_empty, type-gated), sort, and stable keyset cursor pagination (OR-of-ANDs
+  expansion, id tiebreak); field-level PATCH with version bump; data validated against
+  the attribute catalog; every page carries `total`.
+- **Query-engine tests + CI database** (#7): 17 tests incl. cursor-stability walks,
+  unicode, JSONB nulls, filter/sort combos; CI runs them against a `postgres:16` service
+  container; `pnpm --filter @tabella/server bench` measures p50/p95/p99 over HTTP.
+
+### Measured
+
+- Local (Docker Postgres, 100k rows): p95 4.1–7.3ms across five query shapes.
+- Deployed (Railway, incl. client RTT): p95 47.1–59.1ms.
+
+[Unreleased]: https://github.com/adityaparab/tabella/commits/main
+[0.2.0]: https://github.com/adityaparab/tabella/releases/tag/v0.2.0
+
 ## [0.1.0] — 2026-09-07
 
 ### Added
