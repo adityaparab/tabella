@@ -7,8 +7,11 @@ that feels instant, live multi-client sync, and an [MCP](https://modelcontextpro
 server that lets AI agents like Claude operate on the data — with agent edits visible in
 the UI in real time.
 
-**Status:** 🚧 Cycle 1 of 7 — skeleton in progress. See [docs/PRD.md](docs/PRD.md) and the
-[CHANGELOG](CHANGELOG.md) for where things stand.
+**Status:** 🚧 Cycle 1 of 7 complete — skeleton live on the internet. See [docs/PRD.md](docs/PRD.md)
+and the [CHANGELOG](CHANGELOG.md) for where things stand.
+
+- **Live demo:** https://web-production-13ef0a.up.railway.app
+- **Live API:** https://server-production-686b5.up.railway.app/api/objects · [health](https://server-production-686b5.up.railway.app/api/health)
 
 ## Quickstart (local)
 
