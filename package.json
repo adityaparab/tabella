@@ -16,7 +16,7 @@
     "typecheck": "turbo run typecheck",
     "test": "turbo run test",
     "lint": "eslint .",
-    "migrate": "pnpm --filter @tabella/server migrate"
+    "migrate": "DATABASE_URL=${DATABASE_URL:-postgres://postgres:postgres@localhost:5433/tabella} pnpm --filter @tabella/server migrate"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.0",
