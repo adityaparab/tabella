@@ -1,63 +1,58 @@
-import { useEffect, useState } from 'react';
-import type { ObjectWithAttributes } from '@tabella/shared';
-import { apiUrl, fetchObjects } from './api.js';
-
-type State =
-  | { kind: 'loading' }
-  | { kind: 'error'; message: string }
-  | { kind: 'ready'; objects: ObjectWithAttributes[] };
+import { useQuery } from '@tanstack/react-query';
+import { useState } from 'react';
+import { fetchObjects, fetchRecords } from './api.js';
+import { RecordTable } from './RecordTable.js';
 
 export function App() {
-  const [state, setState] = useState<State>({ kind: 'loading' });
+  const [slug, setSlug] = useState<string | null>(null);
+  const objects = useQuery({ queryKey: ['objects'], queryFn: fetchObjects });
+  const active = objects.data?.find((object) => object.slug === slug) ?? objects.data?.[0] ?? null;
 
-  useEffect(() => {
-    fetchObjects()
-      .then((objects) => setState({ kind: 'ready', objects }))
-      .catch((err: unknown) =>
-        setState({
-          kind: 'error',
-          message: err instanceof Error ? err.message : 'Unknown error',
-        }),
-      );
-  }, []);
+  const records = useQuery({
+    queryKey: ['records', active?.slug],
+    queryFn: () => fetchRecords(active!.slug, { limit: 50 }),
+    enabled: active !== null,
+  });
 
   return (
-    <main className="shell">
+    <div className="app">
       <header className="masthead">
-        <h1>
-          Tabella <span className="tag">Cycle 1 — skeleton</span>
-        </h1>
-        <p className="sub">
-          Real-time collaborative data workspace · API:{' '}
-          <code>{apiUrl.replace(/^https?:\/\//, '')}</code>
-        </p>
+        <h1>Tabella</h1>
+        <p className="sub">Real-time collaborative data workspace</p>
       </header>
 
-      {state.kind === 'loading' && <p className="status">Loading objects…</p>}
-
-      {state.kind === 'error' && (
+      {objects.isPending && <p className="status">Loading objects…</p>}
+      {objects.isError && (
         <p className="status error" role="alert">
-          Could not reach the API: {state.message}
+          Could not reach the API: {objects.error.message}
         </p>
       )}
 
-      {state.kind === 'ready' && (
-        <section className="object-card" aria-label="objects">
-          <h2>{state.objects[0]?.name ?? 'No objects'}</h2>
-          <p className="meta">
-            {state.objects.length} object{state.objects.length === 1 ? '' : 's'} ·{' '}
-            {state.objects[0]?.attributes.length ?? 0} attributes
-          </p>
-          <ul className="attributes">
-            {state.objects[0]?.attributes.map((attr) => (
-              <li key={attr.id}>
-                <span className="attr-label">{attr.label}</span>
-                <span className="attr-type">{attr.type}</span>
-              </li>
+      {objects.data && (
+        <>
+          <nav className="object-switcher" aria-label="Objects">
+            {objects.data.map((object) => (
+              <button
+                key={object.slug}
+                className={object.slug === active?.slug ? 'tab active' : 'tab'}
+                onClick={() => setSlug(object.slug)}
+              >
+                {object.name}
+              </button>
             ))}
-          </ul>
-        </section>
+          </nav>
+          {active && (
+            <RecordTable
+              object={active}
+              records={records.data?.records ?? []}
+              total={records.data?.total}
+              isPending={records.isPending}
+              isError={records.isError}
+              error={records.error}
+            />
+          )}
+        </>
       )}
-    </main>
+    </div>
   );
 }

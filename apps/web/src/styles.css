@@ -23,31 +23,28 @@ body {
   }
 }
 
-.shell {
-  max-width: 640px;
+.app {
+  max-width: 1100px;
   margin: 0 auto;
-  padding: 4rem 1.5rem;
+  padding: 2.5rem 1.5rem 4rem;
+}
+
+.masthead {
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
 }
 
 .masthead h1 {
   margin: 0;
-  font-size: 1.75rem;
+  font-size: 1.5rem;
   letter-spacing: -0.02em;
 }
 
-.tag {
-  font-size: 0.7rem;
-  font-weight: 600;
-  vertical-align: middle;
-  padding: 0.2rem 0.55rem;
-  border-radius: 999px;
-  background: #1f6feb22;
-  color: #1f6feb;
-}
-
 .sub {
+  margin: 0;
   color: #6b7280;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
 }
 
 .status {
@@ -59,58 +56,133 @@ body {
   color: #c0392b;
 }
 
-.object-card {
-  margin-top: 2rem;
-  padding: 1.5rem;
+.object-switcher {
+  display: flex;
+  gap: 0.4rem;
+  margin: 1.5rem 0 1rem;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+@media (prefers-color-scheme: dark) {
+  .object-switcher {
+    border-color: #2a2e33;
+  }
+}
+
+.tab {
+  appearance: none;
+  border: none;
+  background: none;
+  padding: 0.5rem 0.9rem;
+  font: inherit;
+  font-weight: 500;
+  color: #6b7280;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+}
+
+.tab.active {
+  color: #1f6feb;
+  border-bottom-color: #1f6feb;
+}
+
+.table-card {
   border-radius: 12px;
   background: #ffffff;
   border: 1px solid #e5e7eb;
   box-shadow: 0 1px 2px rgb(0 0 0 / 4%);
+  overflow: hidden;
 }
 
 @media (prefers-color-scheme: dark) {
-  .object-card {
+  .table-card {
     background: #1a1d21;
     border-color: #2a2e33;
   }
 }
 
-.object-card h2 {
-  margin: 0 0 0.25rem;
-}
-
-.meta {
-  margin: 0 0 1rem;
-  color: #6b7280;
-  font-size: 0.85rem;
-}
-
-.attributes {
-  list-style: none;
-  margin: 0;
-  padding: 0;
+.table-head {
   display: flex;
-  flex-direction: column;
-  gap: 0.4rem;
-}
-
-.attributes li {
-  display: flex;
+  align-items: baseline;
   justify-content: space-between;
-  padding: 0.45rem 0.6rem;
-  border-radius: 8px;
-  background: #f3f4f6;
-  font-size: 0.9rem;
+  padding: 0.9rem 1.1rem;
+  border-bottom: 1px solid #e5e7eb;
 }
 
 @media (prefers-color-scheme: dark) {
-  .attributes li {
-    background: #23272c;
+  .table-head {
+    border-color: #2a2e33;
   }
 }
 
-.attr-type {
-  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-  font-size: 0.78rem;
+.table-head h2 {
+  margin: 0;
+  font-size: 1.05rem;
+}
+
+.count {
   color: #6b7280;
+  font-size: 0.82rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.table-scroll {
+  overflow-x: auto;
+  max-height: 70vh;
+}
+
+table.records {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.88rem;
+}
+
+table.records th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  text-align: left;
+  font-weight: 600;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #6b7280;
+  background: #fafbfc;
+  padding: 0.55rem 1.1rem;
+  border-bottom: 1px solid #e5e7eb;
+  white-space: nowrap;
+}
+
+@media (prefers-color-scheme: dark) {
+  table.records th {
+    background: #202429;
+    border-color: #2a2e33;
+  }
+}
+
+table.records td {
+  padding: 0.5rem 1.1rem;
+  border-bottom: 1px solid #f0f1f3;
+  white-space: nowrap;
+  max-width: 22rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-variant-numeric: tabular-nums;
+}
+
+@media (prefers-color-scheme: dark) {
+  table.records td {
+    border-color: #23272c;
+  }
+}
+
+table.records tbody tr:hover {
+  background: #f6f8fa;
+}
+
+@media (prefers-color-scheme: dark) {
+  table.records tbody tr:hover {
+    background: #202429;
+  }
 }
