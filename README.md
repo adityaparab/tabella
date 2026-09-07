@@ -14,13 +14,15 @@ the UI in real time.
 
 ```bash
 pnpm install
-pnpm dev        # boots the API server (apps/server) and web app (apps/web) together
+docker compose up -d db   # local Postgres 16 on :5433
+pnpm migrate              # apply migrations (node-pg-migrate)
+pnpm dev                  # boots the API server (apps/server) and web app (apps/web)
 ```
 
 - API: http://localhost:3001 — try `curl http://localhost:3001/api/objects`
 - Web: http://localhost:5173
 
-Requires Node >= 22 and pnpm >= 10.
+Requires Node >= 22, pnpm >= 10, and Docker (for the database).
 
 ## Repository layout
 
