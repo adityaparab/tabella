@@ -21,7 +21,7 @@ const INDEXES = [
 ];
 
 export const up = (pgm) => {
-  for (const [name, sql] of INDEXES) {
+  for (const [, sql] of INDEXES) {
     pgm.sql(sql);
   }
   pgm.sql('CREATE INDEX idx_records_data_gin ON records USING gin (data)');
