@@ -37,6 +37,41 @@ apps/mcp      MCP server (stdio) — agents operate via the same REST API
 packages/shared  Zod schemas + WS message types shared by all three
 ```
 
+## AI agents via MCP
+
+Tabella ships an [MCP](https://modelcontextprotocol.io) server (`apps/mcp`, stdio transport)
+with five tools that are thin wrappers over the same REST API the web app uses:
+`list_objects` (schema discovery), `query_records` (filter/sort/cursor, with `total` for
+counting questions), `get_record`, `create_record`, `update_record`. Agent mutations go
+through the exact same validation and (from Cycle 5) fan out over the same WebSocket as
+human edits.
+
+Point any MCP host — Claude Desktop, Claude Code, Cursor — at the deployed API:
+
+```jsonc
+// claude_desktop_config.json  (~/Library/Application Support/Claude/ on macOS)
+{
+  "mcpServers": {
+    "tabella": {
+      "command": "node",
+      "args": ["/absolute/path/to/tabella/apps/mcp/dist/index.js"],
+      "env": {
+        "TABELLA_API_URL": "https://server-production-686b5.up.railway.app"
+      }
+    }
+  }
+}
+```
+
+(Requires a one-time `git clone` + `pnpm install && pnpm build` for `dist/`; the absolute
+node path matters if you use nvm — hosts don't inherit your shell PATH.)
+
+Then ask Claude things like:
+
+- *"How many deals are in Negotiation?"* → `list_objects` → `query_records` → answers from `total`
+- *"Create a deal at Northwind, stage Proposal, value 40k"* → a real record, validated
+  against the attribute catalog, visible immediately in the web app
+
 ## License
 
 [MIT](LICENSE)
