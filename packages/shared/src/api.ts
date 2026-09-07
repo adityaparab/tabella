@@ -23,7 +23,8 @@ export const filterConditionSchema = z.object({
   /** Attribute key (e.g. "stage") or a meta key ("created_at", "updated_at", "version"). */
   key: z.string().min(1).max(64),
   op: z.enum(FILTER_OPERATORS),
-  value: fieldValueSchema.optional(),
+  /** Scalar, or an array when op is "in". */
+  value: z.union([fieldValueSchema, z.array(fieldValueSchema)]).optional(),
 });
 export type FilterCondition = z.infer<typeof filterConditionSchema>;
 
