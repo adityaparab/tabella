@@ -11,6 +11,7 @@
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "test": "vitest run",
     "seed": "tsx src/seed/cli.ts",
+    "bench": "tsx scripts/bench.ts",
     "migrate": "node-pg-migrate -m migrations up",
     "migrate:down": "node-pg-migrate -m migrations down 1",
     "migrate:create": "node-pg-migrate -m migrations create"
