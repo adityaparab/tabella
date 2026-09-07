@@ -1,0 +1,10 @@
+import type { FastifyPluginAsync } from 'fastify';
+import type { HealthResponse } from '@tabella/shared';
+
+export const healthRoutes: FastifyPluginAsync = async (app) => {
+  app.get('/health', async (): Promise<HealthResponse> => ({
+    status: 'ok',
+    db: 'up',
+    time: Date.now(),
+  }));
+};

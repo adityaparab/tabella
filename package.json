@@ -1,0 +1,27 @@
+{
+  "name": "tabella",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Open-source, AI-native mini-CRM: flexible data model, a 100k-row table that feels instant, live multi-client sync, and an MCP server for agents.",
+  "license": "MIT",
+  "packageManager": "pnpm@11.20.0",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "dev": "turbo run dev",
+    "build": "turbo run build",
+    "typecheck": "turbo run typecheck",
+    "test": "turbo run test",
+    "lint": "eslint .",
+    "migrate": "pnpm --filter @tabella/server migrate"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.0",
+    "eslint": "^9.39.0",
+    "turbo": "^2.5.0",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.46.0"
+  }
+}
