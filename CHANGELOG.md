@@ -7,6 +7,27 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [0.3.0] — 2026-09-08
+
+### Added
+
+- **MCP server** (#8): `apps/mcp` (stdio, `@modelcontextprotocol/sdk`) with five tools —
+  `list_objects`, `query_records` (filter/sort/cursor with `total`), `get_record`,
+  `create_record`, `update_record` — thin wrappers over the same REST API as the web app.
+  Records flattened for model readability; shared zod schemas reused for tool inputs.
+- **Claude Desktop verification** (#9): live conversation against the deployed API —
+  *"how many deals are in Negotiation?"* answered from `total: 2408`; *"create a deal at
+  Northwind, stage Proposal, value 40k"* produced a validated record that even linked the
+  existing Northwind company. Copy-paste config snippet in the README.
+- **Web foundation** (#10): app shell, object switcher tabs, TanStack Query record
+  fetching with a "50 shown of 100,000" count badge and loading/error/empty states.
+- **MCP tests** (#11): tool-level suite through a real MCP client/server pair (in-memory
+  transport, mocked fetch) covering discovery, query compilation, and error propagation.
+- Optional MCP API call log (`TABELLA_MCP_LOG`) for demos and gate checks.
+
+[Unreleased]: https://github.com/adityaparab/tabella/commits/main
+[0.3.0]: https://github.com/adityaparab/tabella/releases/tag/v0.3.0
+
 ## [0.2.0] — 2026-09-08
 
 ### Added
